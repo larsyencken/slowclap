@@ -17,6 +17,7 @@ import multiprocessing as mp
 import pyaudio
 import numpy as np
 import SimpleCV
+import pygame
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -29,7 +30,7 @@ def clapper():
     p = mp.Process(target=detect_clap, args=(state,))
     p.start()
 
-    disp = SimpleCV.Display((1024, 768))
+    disp = SimpleCV.Display((1024, 768), flags=pygame.FULLSCREEN)
     cam = SimpleCV.Camera()
     while disp.isNotDone():
         img = cam.getImage()
