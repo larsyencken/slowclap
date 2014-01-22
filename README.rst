@@ -1,7 +1,7 @@
 slowclap
 ========
 
-A clapper based around the PyAudio frontend for PortAudio.
+Detect a clap using your computer's microphone, and take some action. Uses a live microphone feed based on the PyAudio frontend for PortAudio.
 
 Status: *working*
 
