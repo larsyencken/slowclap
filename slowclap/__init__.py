@@ -107,6 +107,25 @@ class RateLimitedDetector(Detector):
                 yield clap
 
 
+class MultiClapDetector(Detector):
+    def __init__(self, d, rate_limit=1, num_of_claps=2):
+        self.child = d
+        self.last_clap = -rate_limit
+        self.rate_limit = rate_limit
+        self.num_of_claps = num_of_claps
+        self.claps_per_rate = []
+
+    def __iter__(self):
+        for clap in self.child:
+            if clap.time - self.last_clap > self.rate_limit:
+                self.last_clap = clap.time
+                self.claps_per_rate = []
+            else:
+                self.claps_per_rate.append(clap.time)
+                if len(self.claps_per_rate) == self.num_of_claps:
+                    yield clap
+
+
 def detect_claps(once=False, verbose=False, command=None, threshold=THRESHOLD,
                  rate_limit=1):
     feed = MicrophoneFeed()
